@@ -7,24 +7,24 @@ function Add(props) {
         e.preventDefault();
         cDisabled(true)
         let result
-        if (props.currentBook) {
-            result = props.client.updateBook(
-                props.currentBook._id,
-                e.target.title.value,
-                e.target.author.value,
-                e.target.genre.value,                
-                e.target.isbn.value,
-                e.target.blurb.value,
-                e.target.bookRead.checked
+        if (props.currentEvent) {
+            result = props.client.updateEvent(
+                props.currentEvent._id,
+                e.target.name.value,
+                e.target.description.value,
+                e.target.type.value,                
+                e.target.date.value,
+                e.target.location.value
+                
             )
         } else {
-            result = props.client.addBook(
-                e.target.title.value,
-                e.target.author.value,
-                e.target.genre.value,                
-                e.target.isbn.value,
-                e.target.blurb.value,
-                e.target.bookRead.checked)
+            result = props.client.addEvent(
+                e.target.name.value,
+                e.target.description.value,
+                e.target.type.value,                
+                e.target.date.value,
+                e.target.location.value
+        )
         }
         result
             .then(() => {
@@ -40,63 +40,55 @@ function Add(props) {
 
     return (
         <>
-        {props.currentBook ? 'Update' : 'Add'}
+        {props.currentEvent ? 'Update' : 'Add'}
         <br />
 
         <form onSubmit={(e) => submitHandler(e)} id="addForm">
-            Title: <br />
+            Event Name: <br />
             <input
                 type="text"
-                defaultValue={props.currentBook?.title}
-                name="title"
+                defaultValue={props.currentEvent?.name}
+                name="name"
                 disabled={disabled}
             />
             <br />
-            Author:
-            <br />
-            <input
-                type="text"
-                defaultValue={props.currentBook?.author}
-                name="author"
-                disabled={disabled}
-            />
-            <br />
-            Genre:
+            type:
             <br />
             <input
                 type="text"
-                defaultValue={props.currentBook?.genre}
-                name="genre"
+                defaultValue={props.currentEvent?.type}
+                name="type"
                 disabled={disabled}
             />
             <br />
-            ISBN:
+            description:
             <br />
             <input
                 type="text"
-                defaultValue={props.currentBook?.isbn}
-                name="isbn"
+                defaultValue={props.currentEvent?.description}
+                name="description"
                 disabled={disabled}
             />
             <br />
-            blurb:
+            Date:
             <br />
             <input
                 type="text"
-                defaultValue={props.currentBook?.blurb}
-                name="blurb"
+                defaultValue={props.currentEvent?.date}
+                name="date"
                 disabled={disabled}
             />
             <br />
-            Read?:
-            <br />            
+            location:
+            <br />
             <input
-                type="checkbox"
-                defaultValue={props.currentBook?.bookRead}
-                name="bookRead"
+                type="text"
+                defaultValue={props.currentEvent?.location}
+                name="location"
                 disabled={disabled}
             />
             <br />
+            
             <br />
             <button type="submit" disabled={disabled}>
                 {" "}

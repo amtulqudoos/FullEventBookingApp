@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = "http://localhost:3000/books"
+const url = "https://event-booking-app-sheffield.herokuapp.com/event"
 
 export class ApiClient {
     apiCall(method, url, data) {
@@ -11,21 +11,21 @@ export class ApiClient {
             throw error;
         })
     }
-    getBooks() {
+    getEvents() {
         return this.apiCall("get", url)        
     }
 
-    addBook(title, author, genre, isbn, blurb, bookRead) {
-        return this.apiCall("post", `${url}/create`, { title, author, genre, isbn, blurb, bookRead })
+    addEvent(name, type, description, date, location) {
+        return this.apiCall("post", `${url}/create`, { name, type, description, date, location })
     }
 
-    removeBook(_id) {
+    removeEvent(_id) {
         return this.apiCall("delete", `${url}/${_id}`)
     }
 
-    updateBook(_id, title, author, genre, isbn, blurb, bookRead) {
+    updateEvent(_id, name, type, description, date, location) {
         console.log(_id)
-        return this.apiCall("put", `${url}/${_id}`, { title, author, genre, isbn, blurb, bookRead })
+        return this.apiCall("put", `${url}/${_id}`, { name, type, description, date, location })
     }
 
 }

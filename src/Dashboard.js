@@ -2,19 +2,19 @@ import React, {useState, useEffect} from 'react'
 import Add from './Add.js'
 
 function Dashboard(props) {
-    const [books, cBooks] = useState([])
+    const [events, cEvents] = useState([])
     const [current, cCurrent] = useState(undefined)
 
     const refreshList = () => {
-        props.client.getBooks().then((response) => cBooks(response.data))
+        props.client.getEvents().then((response) => cEvents(response.data))
     }
 
-    const removeBook = (_id) => {
-        props.client.removeBook(_id).then(() => refreshList())
+    const removeEvent = (_id) => {
+        props.client.removeEvent(_id).then(() => refreshList())
     }
 
-    const updateBook = (bookToUpdate) => {
-        cCurrent(bookToUpdate)
+    const updateEvent = (eventToUpdate) => {
+        cCurrent(eventToUpdate)
     }
 
     useEffect( () => {
@@ -22,17 +22,17 @@ function Dashboard(props) {
     }, [])
 
     const buildrows = () => {
-        return books.map( (current) => {
+        return events.map( (current) => {
             return (
                 <tr key={current._id}>
-                    <td>{current.title}</td>
-                    <td>{current.author}</td>
-                    <td>{current.genre}</td>
-                    <td>{current.isbn}</td>
-                    <td>{current.bookRead.toString()}</td>
+                    <td>{current.name}</td>
+                    <td>{current.type}</td>
+                    <td>{current.description}</td>
+                    <td>{current.date}</td>
+                    <td>{current.location}</td>
                     <td>
-                        <button onClick={() => removeBook(current._id) }>remove</button> 
-                        <button onClick={() => updateBook(current) }>update</button> 
+                        <button onClick={() => removeEvent(current._id) }>remove</button> 
+                        <button onClick={() => updateEvent(current) }>update</button> 
                     </td>
                 </tr>
             )
@@ -41,16 +41,16 @@ function Dashboard(props) {
 
     return (
         <>
-            Book Collection
+            Events
             <br />
             <table>
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Genre</th>
-                        <th>ISBN</th>
-                        <th>Read?</th>                    
+                        <th>Name</th>
+                        <th>type</th>
+                        <th>location</th>
+                        <th>description</th>
+                        <th>date</th>                    
                     </tr>
                 </thead>
                 <tbody>{buildrows()}</tbody>
@@ -63,7 +63,7 @@ function Dashboard(props) {
                     refreshList()
                     cCurrent(undefined)
                 }}
-                currentBook={current}
+                currentEvent={current}
             />
         
         </>
